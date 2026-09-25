@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Login IDs History | Heart Disease</title>
+    <link rel="stylesheet" href="{{ url_for('serve_style') }}">
+</head>
+<body>
+
+<div class="container history-container">
+    <div class="form-box">
+        <h1>All Login IDs History</h1>
+        <p class="user-line">Prediction histories saved across all registered login IDs.</p>
+
+        {% if predictions %}
+        <div class="history-table-wrap">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Email ID</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Risk</th>
+                        <th>Probability</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in predictions %}
+                    <tr>
+                        <td>{{ item.display_name }}</td>
+                        <td>{{ item.display_email }}</td>
+                        <td>{{ item.saved_date or item.created_at }}</td>
+                        <td>{{ item.saved_time or "-" }}</td>
+                        <td>
+                            <span class="risk-badge {% if item.prediction == 1 %}risk-high{% else %}risk-low{% endif %}">
+                                {% if item.prediction == 1 %}High{% else %}Low{% endif %}
+                            </span>
+                        </td>
+                        <td>{{ "%.1f"|format(item.probability) }}%</td>
+                        <td>{{ "%.0f"|format(item.age) }}</td>
+                        <td>{{ item.sex }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>No predictions saved yet.</p>
+        {% endif %}
+
+        <div class="actions">
+            <a href="{{ url_for('history') }}" class="btn-secondary">Personal History</a>
+            <a href="{{ url_for('predict') }}" class="btn-secondary">New Prediction</a>
+            <a href="{{ url_for('logout') }}" class="btn-primary">Logout</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result | Heart Disease</title>
+    <link rel="stylesheet" href="{{ url_for('serve_style') }}">
+</head>
+<body>
+
+<div class="container">
+    <div class="form-box">
+        <h1>Heart Disease Prediction Result</h1>
+
+        <div class="result-box {% if status == 'danger' %}danger{% elif status == 'warning' %}warning{% else %}success{% endif %}">
+            <h2>{{ message }}</h2>
+
+            {% if prediction is not none %}
+            <div class="prediction-details">
+                <p><strong>Risk Level:</strong> {% if prediction == 1 %}HIGH{% else %}LOW{% endif %}</p>
+                <p><strong>Probability:</strong> {{ "%.1f"|format(probability|default(0)) }}%</p>
+            </div>
+
+            <div class="probability-bar" aria-label="Prediction probability">
+                <div class="probability-fill" style="width: {{ probability|default(0) }}%;"></div>
+            </div>
+
+            <div class="recommendations">
+                <h3>Recommendations</h3>
+
+                {% if prediction == 1 %}
+                <ul>
+                    <li>Consult a cardiologist and review these results with a doctor.</li>
+                    <li>Schedule follow-up tests if your clinician recommends them.</li>
+                    <li>Adopt a heart-healthy diet and regular physical activity.</li>
+                    <li>Monitor blood pressure, cholesterol, and stress levels.</li>
+                </ul>
+                {% else %}
+                <ul>
+                    <li>Maintain a healthy routine with balanced nutrition.</li>
+                    <li>Keep up regular cardiovascular exercise.</li>
+                    <li>Continue routine medical checkups.</li>
+                    <li>Stay hydrated, sleep well, and manage stress.</li>
+                </ul>
+                {% endif %}
+            </div>
+            {% else %}
+            <p>No prediction was generated. Please go back and try again.</p>
+            {% endif %}
+        </div>
+
+        <div class="actions">
+            <a href="{{ url_for('predict') }}" class="btn-secondary">New Prediction</a>
+            <a href="{{ url_for('history') }}" class="btn-secondary">View History</a>
+            <a href="{{ url_for('logout') }}" class="btn-primary">Logout</a>
+        </div>
+
+        <div class="disclaimer">
+            <p><strong>Disclaimer:</strong> This result is advisory only. Please consult a licensed healthcare professional before making medical decisions.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

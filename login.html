@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Heart Disease Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('serve_style') }}">
+</head>
+<body>
+
+<div class="container">
+    <div class="form-box">
+        <h1>Heart Disease Prediction</h1>
+        <h2>Login</h2>
+
+        {% if signup_message %}
+        <div class="notice success-notice">{{ signup_message }}</div>
+        {% endif %}
+
+        {% if error_message %}
+        <div class="notice error-notice">{{ error_message }}</div>
+        {% endif %}
+
+        <form action="{{ url_for('home') }}" method="post">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p>New user? <a href="{{ url_for('signup') }}">Create Account</a></p>
+        <div class="history-links">
+            <a href="{{ url_for('history') }}">Personal History</a>
+            <a href="{{ url_for('all_history') }}">All Login IDs History</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('serve_style') }}">
+</head>
+<body>
+
+<div class="container">
+    <div class="form-box">
+        <h1>Heart Disease Prediction</h1>
+        {% if session.get('user_name') %}
+        <p class="user-line">Logged in as {{ session.get('user_name') }}</p>
+        {% endif %}
+        <p>Enter your medical data below for heart disease risk assessment.</p>
+
+        <form action="{{ url_for('predict') }}" method="post">
+            <div class="form-row">
+                <input type="number" name="age" placeholder="Age" required min="1" max="120">
+                <select name="sex" required>
+                    <option value="">Select Gender</option>
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <select name="cp" required>
+                    <option value="">Chest Pain Type</option>
+                    <option value="0">Typical Angina</option>
+                    <option value="1">Atypical Angina</option>
+                    <option value="2">Non-anginal Pain</option>
+                    <option value="3">Asymptomatic</option>
+                </select>
+                <input type="number" name="trestbps" placeholder="Resting Blood Pressure" required min="80" max="240">
+            </div>
+
+            <div class="form-row">
+                <input type="number" name="chol" placeholder="Cholesterol (mg/dl)" required min="100" max="700">
+                <select name="fbs" required>
+                    <option value="">Fasting Blood Sugar > 120</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <select name="restecg" required>
+                    <option value="">Resting ECG</option>
+                    <option value="0">Normal</option>
+                    <option value="1">ST-T Wave Abnormality</option>
+                    <option value="2">Left Ventricular Hypertrophy</option>
+                </select>
+                <input type="number" name="thalach" placeholder="Max Heart Rate" required min="60" max="220">
+            </div>
+
+            <div class="form-row">
+                <select name="exang" required>
+                    <option value="">Exercise Induced Angina</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+                <input type="number" step="0.1" name="oldpeak" placeholder="ST Depression" required min="0" max="10">
+            </div>
+
+            <div class="form-row">
+                <select name="slope" required>
+                    <option value="">Peak Exercise ST Slope</option>
+                    <option value="0">Upsloping</option>
+                    <option value="1">Flat</option>
+                    <option value="2">Downsloping</option>
+                </select>
+                <input type="number" name="ca" placeholder="Major Vessels (0-3)" required min="0" max="3">
+            </div>
+
+            <div class="form-row">
+                <select name="thal" required>
+                    <option value="">Thallium Stress Test</option>
+                    <option value="1">Normal</option>
+                    <option value="2">Fixed Defect</option>
+                    <option value="3">Reversible Defect</option>
+                </select>
+            </div>
+
+            <button type="submit">Predict Heart Disease Risk</button>
+        </form>
+
+        <div class="actions">
+            <a href="{{ url_for('history') }}" class="btn-secondary">View History</a>
+            <a href="{{ url_for('logout') }}" class="btn-primary">Logout</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
